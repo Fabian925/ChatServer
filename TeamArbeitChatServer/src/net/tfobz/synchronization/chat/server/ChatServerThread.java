@@ -21,16 +21,16 @@ public class ChatServerThread extends Thread
 	@Override
 	public void run() {
 		try {
-			synchronized (ChatServer.outputStreams) {
-				ChatServer.outputStreams.add(out);				
-			}
 			String name = null;
 			synchronized (in) {
 				name = in.readLine();
 			}
+			synchronized (ChatServer.outputStreams) {
+				ChatServer.outputStreams.put(name, out);				
+			}
 			synchronized (ChatServer.outputStreams) {	
 				System.out.println(name + " signed in. " + ChatServer.outputStreams.size() + " users");
-				for (PrintStream outs: ChatServer.outputStreams)
+				for (PrintStream outs: ChatServer.outputStreams.get(key);)
 					outs.println(name + " signed in");
 			}
 			
