@@ -20,17 +20,17 @@ public class ChatServerThread extends Thread
 	
 	@Override
 	public void run() {
+		String name = null;
 		try {
-			String name = null;
 			synchronized (in) {
-				name = in.readLine();
+				name = in.readLine() + Math.random();
 			}
 			synchronized (ChatServer.outputStreams) {
 				ChatServer.outputStreams.put(name, out);				
 			}
 			synchronized (ChatServer.outputStreams) {	
 				System.out.println(name + " signed in. " + ChatServer.outputStreams.size() + " users");
-				for (PrintStream outs: ChatServer.outputStreams.get(key);)
+				for (PrintStream outs: ChatServer.outputStreams.values())
 					outs.println(name + " signed in");
 			}
 			
@@ -43,16 +43,16 @@ public class ChatServerThread extends Thread
 				if (line == null)
 					break;
 				synchronized (ChatServer.outputStreams) {
-					for (PrintStream outs: ChatServer.outputStreams)
+					for (PrintStream outs: ChatServer.outputStreams.values())
 						outs.println(name + ": " + line);					
 				}
 			}
 			synchronized (ChatServer.outputStreams) {
 				synchronized (out) {
-					ChatServer.outputStreams.remove(out);
+					ChatServer.outputStreams.remove(name, out);
 				}
 				System.out.println(name + " signed out. " + ChatServer.outputStreams.size() + " users");
-				for (PrintStream outs: ChatServer.outputStreams)
+				for (PrintStream outs: ChatServer.outputStreams.values())
 					outs.println(name + " signed out");
 			}
 		} catch (IOException e) {
@@ -61,7 +61,7 @@ public class ChatServerThread extends Thread
 			if (out != null)
 				synchronized (ChatServer.outputStreams) {
 					synchronized (out) {
-						ChatServer.outputStreams.remove(out);
+						ChatServer.outputStreams.remove(name, out);
 					}
 				}
 		} finally {

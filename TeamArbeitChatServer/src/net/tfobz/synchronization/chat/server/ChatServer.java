@@ -12,7 +12,7 @@ public class ChatServer
 	public static final int PORT = 65535;
 	
 	protected static Hashtable<String, PrintStream> outputStreams =
-		new Hashtable();
+		new Hashtable<String, PrintStream>();
 	
 	public static void main(String[] args) {
 		ServerSocket server = null;

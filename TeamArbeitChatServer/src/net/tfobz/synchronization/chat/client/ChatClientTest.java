@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -73,8 +75,9 @@ public class ChatClientTest extends ChatServer
 			}
 		}
 		System.out.println(outputStreams.size());
-		for(PrintStream ps : outputStreams) {
-			System.out.println(ps.toString());
+		Enumeration<PrintStream> e = outputStreams.elements();
+		while(e.hasMoreElements()) {
+			System.out.println(e.nextElement());
 		}
 
 			
