@@ -4,12 +4,16 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.SocketException;
 
+import javax.swing.JEditorPane;
+
 public class ChatClientThread extends Thread
 {
 	private BufferedReader in = null;
+	private JEditorPane editorPane;
 	
-	public ChatClientThread(BufferedReader in) {
+	public ChatClientThread(BufferedReader in, JEditorPane editorPane) {
 		this.in = in;
+		this.editorPane = editorPane;
 	}
 	
 	@Override
@@ -17,7 +21,7 @@ public class ChatClientThread extends Thread
 		try {
 			while (true) {
 				String line = in.readLine();
-				System.out.println(line);
+				editorPane.setText(editorPane.getText()+ '\n' + line);
 			}
 		} catch (SocketException e) {
 			System.out.println("Connection to ChatServer lost, ignore exception");
