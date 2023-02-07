@@ -119,14 +119,13 @@ public class GUI {
 		});
 		frmChat.getContentPane().add(btnAbmelden);
 
-		btnProfilbild = new JButton("Profilbild wächseln");
+		btnProfilbild = new JButton("Profilbild wï¿½chseln");
 		btnProfilbild.setFont(new Font("Tahoma", Font.BOLD, 18));
 		btnProfilbild.setBounds(590, 40, 220, 30);
 		btnProfilbild.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-
+				new BilderAuswahlGUI();
 			}
 		});
 		frmChat.getContentPane().add(btnProfilbild);
