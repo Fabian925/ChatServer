@@ -23,15 +23,19 @@ public class ChatServerThread extends Thread
 		String name = null;
 		try {
 			synchronized (in) {
-				name = in.readLine() + Math.random();
+				name = in.readLine();
 			}
 			synchronized (ChatServer.outputStreams) {
+				
+				if(ChatServer.outputStreams.containsKey(name)) {
+					throw new NameDoppeltException("Der Name ist bereits vorhanden");
+				}
 				ChatServer.outputStreams.put(name, out);				
 			}
 			synchronized (ChatServer.outputStreams) {	
 				System.out.println(name + " signed in. " + ChatServer.outputStreams.size() + " users");
 				for (PrintStream outs: ChatServer.outputStreams.values())
-					outs.println(name + " signed in");
+					outs.println("<b>" + name+ "</b>" + " signed in" + "<br>");
 			}
 			
 			while (true) {
@@ -44,7 +48,7 @@ public class ChatServerThread extends Thread
 					break;
 				synchronized (ChatServer.outputStreams) {
 					for (PrintStream outs: ChatServer.outputStreams.values())
-						outs.println(name + ": " + line);					
+						outs.println("<b>" + name+ "</b>" + ": " + line + "<br>");					
 				}
 			}
 			synchronized (ChatServer.outputStreams) {
@@ -53,7 +57,7 @@ public class ChatServerThread extends Thread
 				}
 				System.out.println(name + " signed out. " + ChatServer.outputStreams.size() + " users");
 				for (PrintStream outs: ChatServer.outputStreams.values())
-					outs.println(name + " signed out");
+					outs.println("<b>" + name+ "</b>" + " signed out" + "<br>");
 			}
 		} catch (IOException e) {
 			System.out.println(e.getClass().getName() + ": " + e.getMessage());
@@ -64,6 +68,15 @@ public class ChatServerThread extends Thread
 						ChatServer.outputStreams.remove(name, out);
 					}
 				}
+		} catch (NameDoppeltException e) {
+			System.out.println(e.getClass().getName() + ": " + e.getMessage());
+			e.printStackTrace();
+			//TODO ausgabe wenn Name doppelt sind schreiben wir das da hinein
+			try {
+				client.getOutputStream().write(1);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		} finally {
 			try { client.close(); } catch (Exception e1) { ; }
 		}

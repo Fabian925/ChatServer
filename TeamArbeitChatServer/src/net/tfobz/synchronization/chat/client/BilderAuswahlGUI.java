@@ -19,7 +19,7 @@ public class BilderAuswahlGUI extends JDialog
 		setLayout(null);
 		
 		imageIcons[0] = new ImageIcon("src\\profilbild1.png");
-		imageIcons[1] = new ImageIcon("src\\profilbild2.gif");
+		imageIcons[1] = new ImageIcon("src\\profilbild2.png");
 		imageIcons[2] = new ImageIcon("src\\profilbild3.png");
 		
 		//Tux Profilbild

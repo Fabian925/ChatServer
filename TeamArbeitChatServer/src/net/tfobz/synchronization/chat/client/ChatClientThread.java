@@ -6,22 +6,24 @@ import java.net.SocketException;
 
 import javax.swing.JEditorPane;
 
-public class ChatClientThread extends Thread
-{
+public class ChatClientThread extends Thread {
 	private BufferedReader in = null;
 	private JEditorPane editorPane;
-	
+
 	public ChatClientThread(BufferedReader in, JEditorPane editorPane) {
 		this.in = in;
 		this.editorPane = editorPane;
 	}
-	
+
 	@Override
 	public void run() {
 		try {
 			while (true) {
 				String line = in.readLine();
-				editorPane.setText(editorPane.getText()+ '\n' + line);
+				editorPane.setText("<HTML><BODY><font size=+3>"
+						+ editorPane.getText().substring(editorPane.getText().indexOf("<font size=+3>") + 1,
+								editorPane.getText().indexOf("</font>") +1)
+						+ line + "</font></BODY></HTML>");
 			}
 		} catch (SocketException e) {
 			System.out.println("Connection to ChatServer lost, ignore exception");

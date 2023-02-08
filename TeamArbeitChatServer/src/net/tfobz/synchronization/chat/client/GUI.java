@@ -7,6 +7,9 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -15,12 +18,14 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import javax.swing.JTextField;
+import javax.swing.text.html.HTMLEditorKit;
 
 import net.tfobz.synchronization.chat.server.ChatServer;
 
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.JEditorPane;
+import javax.swing.JScrollPane;
 
 public class GUI {
 
@@ -37,6 +42,7 @@ public class GUI {
 	private JTextField textField_1;
 	private JButton btnEnter;
 	private JEditorPane editorPane;
+	private JScrollPane scrollPane;
 
 	/**
 	 * Launch the application.
@@ -72,14 +78,26 @@ public class GUI {
 		textField = new JTextField();
 		textField.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		textField.setBounds(80, 40, 500, 30);
-		frmChat.getContentPane().add(textField);
 		textField.setColumns(10);
+		textField.addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyChar() == '\n')
+					btnAbmelden.doClick();
+			} 
+		});
+		frmChat.getContentPane().add(textField);
 
 		textField_1 = new JTextField();
 		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		textField_1.setBounds(15, 500, 890, 30);
-		frmChat.getContentPane().add(textField_1);
 		textField_1.setColumns(10);
+		textField_1.addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyChar() == '\n')
+					btnEnter.doClick();
+			} 
+		});
+		frmChat.getContentPane().add(textField_1);
 
 		btnAbmelden = new JButton("Anmelden");
 		btnAbmelden.setFont(new Font("Tahoma", Font.BOLD, 18));
@@ -119,13 +137,15 @@ public class GUI {
 		});
 		frmChat.getContentPane().add(btnAbmelden);
 
-		btnProfilbild = new JButton("Profilbild w�chseln");
+		btnProfilbild = new JButton("Profilbild wechseln");
 		btnProfilbild.setFont(new Font("Tahoma", Font.BOLD, 18));
 		btnProfilbild.setBounds(590, 40, 220, 30);
 		btnProfilbild.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new BilderAuswahlGUI();
+				// TODO Auto-generated method stub
+				BilderAuswahlGUI gui = new BilderAuswahlGUI();
+				gui.setVisible(true);
 			}
 		});
 		frmChat.getContentPane().add(btnProfilbild);
@@ -142,9 +162,17 @@ public class GUI {
 			}
 		});
 		frmChat.getContentPane().add(btnEnter);
+		javax.swing.text.html.HTMLEditorKit eKit = new javax.swing.text.html.HTMLEditorKit();
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(15, 90, 950, 400);
+		frmChat.getContentPane().add(scrollPane);
 		
 		editorPane = new JEditorPane();
-		editorPane.setBounds(15, 90, 950, 400);
-		frmChat.getContentPane().add(editorPane);
+		scrollPane.setViewportView(editorPane);
+		editorPane.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		editorPane.setEditorKit(eKit);
+		editorPane.setText("<HTML><BODY><font size=+3></font></BODY></HTML>");
+		editorPane.setEditable(false);
 	}
 }
