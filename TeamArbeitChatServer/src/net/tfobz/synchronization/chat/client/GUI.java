@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,6 +45,7 @@ public class GUI {
 	private JButton btnEnter;
 	private JEditorPane editorPane;
 	private JScrollPane scrollPane;
+	private int profilbild = -1;
 
 	/**
 	 * Launch the application.
@@ -115,9 +118,17 @@ public class GUI {
 							client = new Socket("localhost", PORT);
 							in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 							out = new PrintStream(client.getOutputStream());
-							out.println(name);
-
-							new ChatClientThread(in, editorPane).start();
+							//Profilbild und Name schicken
+							out.println(profilbild + ';' + name);
+							
+							//Name doppelt?
+							if(client.getInputStream().read() == 1) {
+								JOptionPane.showMessageDialog(GUI.this.frmChat, "Der Name ist bereits vorhanden. "
+										+ "\nBitte verwenden Sie einen anderen Namen", "Doppelter Name", JOptionPane.ERROR_MESSAGE);
+							}
+							else {
+								new ChatClientThread(in, editorPane).start();
+							}
 
 						} catch (IOException e1) {
 							System.out.println(e1.getClass().getName() + ": " + e1.getMessage());
@@ -146,6 +157,7 @@ public class GUI {
 				// TODO Auto-generated method stub
 				BilderAuswahlGUI gui = new BilderAuswahlGUI();
 				gui.setVisible(true);
+				profilbild = gui.getAusgesuchtesProfilbild();
 			}
 		});
 		frmChat.getContentPane().add(btnProfilbild);

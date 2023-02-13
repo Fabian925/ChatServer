@@ -21,21 +21,27 @@ public class ChatServerThread extends Thread
 	@Override
 	public void run() {
 		String name = null;
+		int bild = -1;
 		try {
 			synchronized (in) {
-				name = in.readLine();
+				//FIXME Bei readLine und writeLine werden Bytes übertrogen koane Strings
+				String einlesung = in.readLine();
+				System.out.println(einlesung);
+				bild = Integer.parseInt(einlesung.substring(0, einlesung.indexOf(';')));
+				name = einlesung.substring(einlesung.indexOf(';'), einlesung.length());
 			}
 			synchronized (ChatServer.outputStreams) {
 				
 				if(ChatServer.outputStreams.containsKey(name)) {
 					throw new NameDoppeltException("Der Name ist bereits vorhanden");
 				}
+				client.getOutputStream().write(0);
 				ChatServer.outputStreams.put(name, out);				
 			}
 			synchronized (ChatServer.outputStreams) {	
 				System.out.println(name + " signed in. " + ChatServer.outputStreams.size() + " users");
 				for (PrintStream outs: ChatServer.outputStreams.values())
-					outs.println("<b>" + name+ "</b>" + " signed in" + "<br>");
+					outs.println("<img src=\"profilbild" + bild + ".png\">" + "<b>" + name+ "</b>" + " signed in" + "<br>");
 			}
 			
 			while (true) {
