@@ -119,7 +119,7 @@ public class GUI {
 							in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 							out = new PrintStream(client.getOutputStream());
 							//Profilbild und Name schicken
-							out.println(profilbild + ';' + name);
+							out.println(profilbild + ";" + name);
 							
 							//Name doppelt?
 							if(client.getInputStream().read() == 1) {
@@ -154,8 +154,8 @@ public class GUI {
 		btnProfilbild.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				BilderAuswahlGUI gui = new BilderAuswahlGUI();
+				gui.setModal(true);
 				gui.setVisible(true);
 				profilbild = gui.getAusgesuchtesProfilbild();
 			}

@@ -6,6 +6,9 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+
 public class ChatServerThread extends Thread
 {
 	private Socket client = null;
@@ -24,11 +27,10 @@ public class ChatServerThread extends Thread
 		int bild = -1;
 		try {
 			synchronized (in) {
-				//FIXME Bei readLine und writeLine werden Bytes übertrogen koane Strings
-				String einlesung = in.readLine();
+				String einlesung = in.readLine().toString();
 				System.out.println(einlesung);
 				bild = Integer.parseInt(einlesung.substring(0, einlesung.indexOf(';')));
-				name = einlesung.substring(einlesung.indexOf(';'), einlesung.length());
+				name = einlesung.substring(einlesung.indexOf(';') + 1, einlesung.length());
 			}
 			synchronized (ChatServer.outputStreams) {
 				
@@ -40,8 +42,13 @@ public class ChatServerThread extends Thread
 			}
 			synchronized (ChatServer.outputStreams) {	
 				System.out.println(name + " signed in. " + ChatServer.outputStreams.size() + " users");
-				for (PrintStream outs: ChatServer.outputStreams.values())
-					outs.println("<img src=\"profilbild" + bild + ".png\">" + "<b>" + name+ "</b>" + " signed in" + "<br>");
+				for (PrintStream outs: ChatServer.outputStreams.values()) { 
+					//FIXME Bilder werden nicht angezeigt vieleicht weil bytes übertrogen werden bo
+					outs.println((String) "<img src=\"src/profilbild" + bild + ".png\">" + "<b>" + name+ "</b>" + " signed in" + "<br>");
+					outs.println("<img src=\"C:\\Users\\User\\Documents\\GitHub\\ChatServer\\TeamArbeitChatServer\\src\\profilbild1.png\" width=\"500\" height=\"600\">");
+					Icon i = new ImageIcon("src/profilbild1.png");
+					System.out.println(i.toString());
+				}
 			}
 			
 			while (true) {

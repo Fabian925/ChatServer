@@ -13,6 +13,7 @@ public class BilderAuswahlGUI extends JDialog
 	
 	public BilderAuswahlGUI() {
 		
+		
 		setTitle("ChatClientGUI: Profilbild Auswahl");
 		setBounds(120, 120, 580, 260);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -122,7 +123,6 @@ public class BilderAuswahlGUI extends JDialog
 		});
 		getContentPane().add(buttons[7]);
 		
-		setVisible(true);
 	}
 	
 	/**
