@@ -9,59 +9,56 @@ import java.net.Socket;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
-public class ChatServerThread extends Thread
-{
+public class ChatServerThread extends Thread {
 	private Socket client = null;
 	private BufferedReader in = null;
 	private PrintStream out = null;
-	
+	private int bild = -1;
+	private String name = null;
+
 	public ChatServerThread(Socket client) throws IOException {
 		this.client = client;
 		in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 		out = new PrintStream(client.getOutputStream());
 	}
-	
+
 	@Override
 	public void run() {
-		String name = null;
-		int bild = -1;
 		try {
 			synchronized (in) {
 				String einlesung = in.readLine().toString();
-				System.out.println(einlesung);
+
 				bild = Integer.parseInt(einlesung.substring(0, einlesung.indexOf(';')));
 				name = einlesung.substring(einlesung.indexOf(';') + 1, einlesung.length());
 			}
 			synchronized (ChatServer.outputStreams) {
-				
-				if(ChatServer.outputStreams.containsKey(name)) {
+
+				if (ChatServer.outputStreams.containsKey(name)) {
 					throw new NameDoppeltException("Der Name ist bereits vorhanden");
 				}
 				client.getOutputStream().write(0);
-				ChatServer.outputStreams.put(name, out);				
+				ChatServer.outputStreams.put(name, out);
 			}
-			synchronized (ChatServer.outputStreams) {	
+			synchronized (ChatServer.outputStreams) {
 				System.out.println(name + " signed in. " + ChatServer.outputStreams.size() + " users");
-				for (PrintStream outs: ChatServer.outputStreams.values()) { 
-					//FIXME Bilder werden nicht angezeigt vieleicht weil bytes übertrogen werden bo
-					outs.println((String) "<img src=\"src/profilbild" + bild + ".png\">" + "<b>" + name+ "</b>" + " signed in" + "<br>");
-					outs.println("<img src=\"C:\\Users\\User\\Documents\\GitHub\\ChatServer\\TeamArbeitChatServer\\src\\profilbild1.png\" width=\"500\" height=\"600\">");
-					Icon i = new ImageIcon("src/profilbild1.png");
-					System.out.println(i.toString());
+				for (PrintStream outs : ChatServer.outputStreams.values()) {
+					outs.println("<img src=\"file:src\\profilbild" + bild + ".png\" width=25 height=25>" + "<b>" + name
+							+ " signed in" + "</b>" + "<br>");
 				}
 			}
-			
+
 			while (true) {
 				String line = null;
-				synchronized (in){
+				synchronized (in) {
 					line = in.readLine();
 				}
-				
+
 				if (line == null)
 					break;
 				synchronized (ChatServer.outputStreams) {
-					for (PrintStream outs: ChatServer.outputStreams.values())
-						outs.println("<b>" + name+ "</b>" + ": " + line + "<br>");					
+					for (PrintStream outs : ChatServer.outputStreams.values())
+						outs.println("<img src=\"file:src\\profilbild" + bild + ".png\" width=25 height=25>" + "<b>"
+								+ name + "</b>" + ": " + line + "<br>");
 				}
 			}
 			synchronized (ChatServer.outputStreams) {
@@ -69,8 +66,9 @@ public class ChatServerThread extends Thread
 					ChatServer.outputStreams.remove(name, out);
 				}
 				System.out.println(name + " signed out. " + ChatServer.outputStreams.size() + " users");
-				for (PrintStream outs: ChatServer.outputStreams.values())
-					outs.println("<b>" + name+ "</b>" + " signed out" + "<br>");
+				for (PrintStream outs : ChatServer.outputStreams.values())
+					outs.println("<img src=\"file:src\\profilbild" + bild + ".png\" width=25 height=25>" + "<b>" + name
+							+ " signed out" + "</b>" + "<br>");
 			}
 		} catch (IOException e) {
 			System.out.println(e.getClass().getName() + ": " + e.getMessage());
@@ -84,14 +82,18 @@ public class ChatServerThread extends Thread
 		} catch (NameDoppeltException e) {
 			System.out.println(e.getClass().getName() + ": " + e.getMessage());
 			e.printStackTrace();
-			//TODO ausgabe wenn Name doppelt sind schreiben wir das da hinein
+			// TODO ausgabe wenn Name doppelt sind schreiben wir das da hinein
 			try {
 				client.getOutputStream().write(1);
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
 		} finally {
-			try { client.close(); } catch (Exception e1) { ; }
+			try {
+				client.close();
+			} catch (Exception e1) {
+				;
+			}
 		}
 	}
 }

@@ -20,8 +20,9 @@ public class ChatClientThread extends Thread {
 		try {
 			while (true) {
 				String line = in.readLine();
-				editorPane.setText("<HTML><BODY><font size=+3>"
-						+ editorPane.getText().substring(editorPane.getText().indexOf("<font size=+3>") + 1,
+				System.out.println(line);
+				editorPane.setText("<HTML><BODY><font size=+2>"
+						+ editorPane.getText().substring(editorPane.getText().indexOf("<font size=+2>") + 1,
 								editorPane.getText().indexOf("</font>") +1)
 						+ line + "</font></BODY></HTML>");
 			}

@@ -84,9 +84,9 @@ public class GUI {
 		textField.setColumns(10);
 		textField.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
-				if(e.getKeyChar() == '\n')
+				if (e.getKeyChar() == '\n')
 					btnAbmelden.doClick();
-			} 
+			}
 		});
 		frmChat.getContentPane().add(textField);
 
@@ -96,9 +96,9 @@ public class GUI {
 		textField_1.setColumns(10);
 		textField_1.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
-				if(e.getKeyChar() == '\n')
+				if (e.getKeyChar() == '\n')
 					btnEnter.doClick();
-			} 
+			}
 		});
 		frmChat.getContentPane().add(textField_1);
 
@@ -109,29 +109,37 @@ public class GUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (btnAbmelden.getText().equals("Anmelden")) {
-					btnAbmelden.setText("Abmelden");
-					btnProfilbild.setEnabled(false);
-					textField.setEnabled(false);
 					String name = textField.getText();
 					if (!name.equals("")) {
-						try {
-							client = new Socket("localhost", PORT);
-							in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-							out = new PrintStream(client.getOutputStream());
-							//Profilbild und Name schicken
-							out.println(profilbild + ";" + name);
-							
-							//Name doppelt?
-							if(client.getInputStream().read() == 1) {
-								JOptionPane.showMessageDialog(GUI.this.frmChat, "Der Name ist bereits vorhanden. "
-										+ "\nBitte verwenden Sie einen anderen Namen", "Doppelter Name", JOptionPane.ERROR_MESSAGE);
-							}
-							else {
-								new ChatClientThread(in, editorPane).start();
-							}
+						// Profilbild?
+						if (profilbild == -1) {
+							JOptionPane.showMessageDialog(GUI.this.frmChat,
+									"Bitte wählen Sie zuerst ein Profilbild aus.", "Kein Profilbild",
+									JOptionPane.ERROR_MESSAGE);
+						} else {
+							try {
+								client = new Socket("localhost", PORT);
+								in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+								out = new PrintStream(client.getOutputStream());
+								// Profilbild und Name schicken
+								out.println(profilbild + ";" + name);
 
-						} catch (IOException e1) {
-							System.out.println(e1.getClass().getName() + ": " + e1.getMessage());
+								// Name doppelt?
+								if (client.getInputStream().read() == 1) {
+									JOptionPane.showMessageDialog(GUI.this.frmChat,
+											"Der Name ist bereits vorhanden. "
+													+ "\nBitte verwenden Sie einen anderen Namen",
+											"Doppelter Name", JOptionPane.ERROR_MESSAGE);
+								} else {
+									btnAbmelden.setText("Abmelden");
+									btnProfilbild.setEnabled(false);
+									textField.setEnabled(false);
+									new ChatClientThread(in, editorPane).start();
+								}
+
+							} catch (IOException e1) {
+								System.out.println(e1.getClass().getName() + ": " + e1.getMessage());
+							}
 						}
 					}
 				} else {
@@ -174,17 +182,15 @@ public class GUI {
 			}
 		});
 		frmChat.getContentPane().add(btnEnter);
-		javax.swing.text.html.HTMLEditorKit eKit = new javax.swing.text.html.HTMLEditorKit();
-		
+
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(15, 90, 950, 400);
 		frmChat.getContentPane().add(scrollPane);
-		
+
 		editorPane = new JEditorPane();
 		scrollPane.setViewportView(editorPane);
-		editorPane.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		editorPane.setEditorKit(eKit);
-		editorPane.setText("<HTML><BODY><font size=+3></font></BODY></HTML>");
+		editorPane.setContentType("text/html");
+		editorPane.setText( "<HTML><BODY><font size=+2></font></img></BODY></HTML>");
 		editorPane.setEditable(false);
 	}
 }

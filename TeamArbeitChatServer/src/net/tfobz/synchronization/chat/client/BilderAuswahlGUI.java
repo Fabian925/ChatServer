@@ -19,9 +19,9 @@ public class BilderAuswahlGUI extends JDialog
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLayout(null);
 		
-		imageIcons[0] = new ImageIcon("src\\profilbild1.png");
-		imageIcons[1] = new ImageIcon("src\\profilbild2.png");
-		imageIcons[2] = new ImageIcon("src\\profilbild3.png");
+		imageIcons[0] = new ImageIcon("src\\profilbild0.png");
+		imageIcons[1] = new ImageIcon("src\\profilbild1.png");
+		imageIcons[2] = new ImageIcon("src\\profilbild2.png");
 		
 		//Tux Profilbild
 		buttons[0] = new JButton();
@@ -130,6 +130,7 @@ public class BilderAuswahlGUI extends JDialog
 	 * @return -1 wenn kein Profilbild ausgesucht wurde. Ansonsten 0 bis 7.
 	 */
 	public int getAusgesuchtesProfilbild() {
+		System.out.println(ausgesuchtesProfilbild);
 		return this.ausgesuchtesProfilbild;
 	}
 }
