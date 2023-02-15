@@ -7,7 +7,7 @@ import javax.swing.*;
 
 public class BilderAuswahlGUI extends JDialog
 {
-	private ImageIcon imageIcons[] = new ImageIcon[3];
+	private ImageIcon imageIcons[] = new ImageIcon[8];
 	private JButton[] buttons = new JButton[8];
 	private int ausgesuchtesProfilbild = -1;
 	
@@ -22,6 +22,11 @@ public class BilderAuswahlGUI extends JDialog
 		imageIcons[0] = new ImageIcon("src\\profilbild0.png");
 		imageIcons[1] = new ImageIcon("src\\profilbild1.png");
 		imageIcons[2] = new ImageIcon("src\\profilbild2.png");
+		imageIcons[3] = new ImageIcon("src\\profilbild3.png");
+		imageIcons[4] = new ImageIcon("src\\profilbild4.png");
+		imageIcons[5] = new ImageIcon("src\\profilbild5.png");
+		imageIcons[6] = new ImageIcon("src\\profilbild6.png");
+		imageIcons[7] = new ImageIcon("src\\profilbild7.png");
 		
 		//Tux Profilbild
 		buttons[0] = new JButton();
@@ -65,7 +70,7 @@ public class BilderAuswahlGUI extends JDialog
 		//TODO andere Profilbilder
 		buttons[3] = new JButton();
 		buttons[3].setBounds(420, 0, 140, 105);
-		buttons[3].setIcon(imageIcons[2]);
+		buttons[3].setIcon(imageIcons[3]);
 		buttons[3].addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -77,7 +82,7 @@ public class BilderAuswahlGUI extends JDialog
 		
 		buttons[4] = new JButton();
 		buttons[4].setBounds(0, 105, 140, 105);
-		buttons[4].setIcon(imageIcons[2]);
+		buttons[4].setIcon(imageIcons[4]);
 		buttons[4].addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -89,7 +94,7 @@ public class BilderAuswahlGUI extends JDialog
 
 		buttons[5] = new JButton();
 		buttons[5].setBounds(140, 105, 140, 105);
-		buttons[5].setIcon(imageIcons[2]);
+		buttons[5].setIcon(imageIcons[5]);
 		buttons[5].addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -101,7 +106,7 @@ public class BilderAuswahlGUI extends JDialog
 		
 		buttons[6] = new JButton();
 		buttons[6].setBounds(280, 105, 140, 105);
-		buttons[6].setIcon(imageIcons[2]);
+		buttons[6].setIcon(imageIcons[6]);
 		buttons[6].addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -113,7 +118,7 @@ public class BilderAuswahlGUI extends JDialog
 
 		buttons[7] = new JButton();
 		buttons[7].setBounds(420, 105, 140, 105);
-		buttons[7].setIcon(imageIcons[2]);
+		buttons[7].setIcon(imageIcons[7]);
 		buttons[7].addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
