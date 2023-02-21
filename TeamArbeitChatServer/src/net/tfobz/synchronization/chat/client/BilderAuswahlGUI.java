@@ -7,7 +7,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-public class BilderAuswahlGUI extends JDialog {
+
+public class BilderAuswahlGUI extends JDialog
+{
 	private ImageIcon imageIcons[] = new ImageIcon[8];
 	private JButton[] buttons = new JButton[8];
 	private int ausgesuchtesProfilbild = -1;
@@ -31,6 +33,8 @@ public class BilderAuswahlGUI extends JDialog {
 		imageIcons[7] = new ImageIcon("src\\profilbild7.png");
 
 		// Tux Profilbild
+		
+		//Tux Profilbild
 		buttons[0] = new JButton();
 		buttons[0].setBounds(0, 0, 140, 105);
 		buttons[0].setIcon(imageIcons[0]);
