@@ -28,6 +28,7 @@ import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.JEditorPane;
 import javax.swing.JScrollPane;
+import java.awt.Color;
 
 public class GUI {
 
@@ -68,17 +69,21 @@ public class GUI {
 	 */
 	public GUI() {
 		frmChat = new JFrame();
+		frmChat.getContentPane().setBackground(Color.BLACK);
 		frmChat.setTitle("ChatClientGUI");
 		frmChat.setBounds(100, 100, 1000, 600);
 		frmChat.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmChat.getContentPane().setLayout(null);
 
 		lblName = new JLabel("Name:");
+		lblName.setForeground(Color.WHITE);
 		lblName.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblName.setBounds(10, 40, 70, 30);
 		frmChat.getContentPane().add(lblName);
 
 		textField = new JTextField();
+		textField.setForeground(Color.WHITE);
+		textField.setBackground(Color.DARK_GRAY);
 		textField.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		textField.setBounds(80, 40, 500, 30);
 		textField.setColumns(10);
@@ -91,6 +96,8 @@ public class GUI {
 		frmChat.getContentPane().add(textField);
 
 		textField_1 = new JTextField();
+		textField_1.setForeground(Color.WHITE);
+		textField_1.setBackground(Color.DARK_GRAY);
 		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		textField_1.setBounds(15, 500, 890, 30);
 		textField_1.setColumns(10);
@@ -103,6 +110,8 @@ public class GUI {
 		frmChat.getContentPane().add(textField_1);
 
 		btnAbmelden = new JButton("Anmelden");
+		btnAbmelden.setForeground(Color.WHITE);
+		btnAbmelden.setBackground(Color.DARK_GRAY);
 		btnAbmelden.setFont(new Font("Tahoma", Font.BOLD, 18));
 		btnAbmelden.setBounds(815, 40, 155, 30);
 		btnAbmelden.addActionListener(new ActionListener() {
@@ -157,6 +166,8 @@ public class GUI {
 		frmChat.getContentPane().add(btnAbmelden);
 
 		btnProfilbild = new JButton("Profilbild wechseln");
+		btnProfilbild.setForeground(Color.WHITE);
+		btnProfilbild.setBackground(Color.DARK_GRAY);
 		btnProfilbild.setFont(new Font("Tahoma", Font.BOLD, 18));
 		btnProfilbild.setBounds(590, 40, 220, 30);
 		btnProfilbild.addActionListener(new ActionListener() {
@@ -171,6 +182,7 @@ public class GUI {
 		frmChat.getContentPane().add(btnProfilbild);
 
 		btnEnter = new JButton("");
+		btnEnter.setBackground(Color.DARK_GRAY);
 		btnEnter.setIcon(new ImageIcon(
 				GUI.class.getResource("/com/sun/javafx/scene/control/skin/caspian/images/enter-icon.png")));
 		btnEnter.setBounds(915, 500, 50, 30);
@@ -190,7 +202,6 @@ public class GUI {
 		editorPane = new JEditorPane();
 		scrollPane.setViewportView(editorPane);
 		editorPane.setContentType("text/html");
-		editorPane.setText( "<HTML><BODY><font size=+2></font></img></BODY></HTML>");
 		editorPane.setEditable(false);
 	}
 }

@@ -15,6 +15,7 @@ public class ChatServerThread extends Thread {
 	private PrintStream out = null;
 	private int bild = -1;
 	private String name = null;
+	private String farbe = "";
 
 	public ChatServerThread(Socket client) throws IOException {
 		this.client = client;
@@ -38,6 +39,7 @@ public class ChatServerThread extends Thread {
 				}
 				client.getOutputStream().write(0);
 				ChatServer.outputStreams.put(name, out);
+
 			}
 			synchronized (ChatServer.outputStreams) {
 				System.out.println(name + " signed in. " + ChatServer.outputStreams.size() + " users");
@@ -57,8 +59,8 @@ public class ChatServerThread extends Thread {
 					break;
 				synchronized (ChatServer.outputStreams) {
 					for (PrintStream outs : ChatServer.outputStreams.values())
-						outs.println("<img src=\"file:src\\profilbild" + bild + ".png\" width=25 height=25>" + "<b>"
-								+ name + "</b>" + ": " + line + "<br>");
+						outs.println("<img src=\"file:src\\profilbild" + bild + ".png\" width=25 height=25>"
+								+ "<b>" + name + "</b>" + ": " + line + "<br>");
 				}
 			}
 			synchronized (ChatServer.outputStreams) {

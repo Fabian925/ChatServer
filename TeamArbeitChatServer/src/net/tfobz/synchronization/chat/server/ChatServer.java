@@ -7,13 +7,11 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-public class ChatServer
-{
+public class ChatServer {
 	public static final int PORT = 65535;
-	
-	protected static Hashtable<String, PrintStream> outputStreams =
-		new Hashtable<String, PrintStream>();
-	
+
+	protected static Hashtable<String, PrintStream> outputStreams = new Hashtable<String, PrintStream>();
+
 	public static void main(String[] args) {
 		ServerSocket server = null;
 		try {
@@ -30,9 +28,11 @@ public class ChatServer
 		} catch (IOException e) {
 			System.out.println(e.getClass().getName() + ": " + e.getMessage());
 		} finally {
-			try { 
+			try {
 				server.close();
-			} catch (Exception e1) { ; }
+			} catch (Exception e1) {
+				;
+			}
 		}
 	}
 }
