@@ -44,7 +44,7 @@ public class ChatServerThread extends Thread {
 			synchronized (ChatServer.outputStreams) {
 				System.out.println(name + " signed in. " + ChatServer.outputStreams.size() + " users");
 				for (PrintStream outs : ChatServer.outputStreams.values()) {
-					outs.println("<img src=\"file:src\\profilbild" + bild + ".png\" width=40 height=40>" + "<b>" + name
+					outs.println("<img src=\"file:src\\profilbild" + bild + ".png\" width=25 height=25>" + "<b>" + name
 							+ " signed in" + "</b>" + "<br>");
 				}
 			}
@@ -58,14 +58,10 @@ public class ChatServerThread extends Thread {
 				if (line == null)
 					break;
 				synchronized (ChatServer.outputStreams) {
-					for (PrintStream outs : ChatServer.outputStreams.values())
-<<<<<<< HEAD
+					for (PrintStream outs : ChatServer.outputStreams.values()) {
 						outs.println("<img src=\"file:src\\profilbild" + bild + ".png\" width=25 height=25>"
 								+ "<b>" + name + "</b>" + ": " + line + "<br>");
-=======
-						outs.println("<img src=\"file:src\\profilbild" + bild + ".png\" width=40 height=40>" + "<b>"
-								+ name + "</b>" + ": " + line + "<br>");
->>>>>>> 86ee8c9e31091b3c4bad71180a31c32fba01f38f
+					}
 				}
 			}
 			synchronized (ChatServer.outputStreams) {
@@ -74,7 +70,7 @@ public class ChatServerThread extends Thread {
 				}
 				System.out.println(name + " signed out. " + ChatServer.outputStreams.size() + " users");
 				for (PrintStream outs : ChatServer.outputStreams.values())
-					outs.println("<img src=\"file:src\\profilbild" + bild + ".png\" width=40 height=40>" + "<b>" + name
+					outs.println("<img src=\"file:src\\profilbild" + bild + ".png\" width=25 height=25>" + "<b>" + name
 							+ " signed out" + "</b>" + "<br>");
 			}
 		} catch (IOException e) {
@@ -84,6 +80,10 @@ public class ChatServerThread extends Thread {
 				synchronized (ChatServer.outputStreams) {
 					synchronized (out) {
 						ChatServer.outputStreams.remove(name, out);
+						System.out.println(name + " signed out. " + ChatServer.outputStreams.size() + " users");
+						for (PrintStream outs : ChatServer.outputStreams.values())
+							outs.println("<img src=\"file:src\\profilbild" + bild + ".png\" width=25 height=25>" + "<b>" + name
+									+ " signed out" + "</b>" + "<br>");
 					}
 				}
 		} catch (NameDoppeltException e) {

@@ -30,7 +30,7 @@ import javax.swing.JEditorPane;
 import javax.swing.JScrollPane;
 import java.awt.Color;
 
-public class GUI {
+public class ChatGUI {
 
 	public static final int PORT = 65535;
 	Socket client = null;
@@ -55,7 +55,7 @@ public class GUI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GUI window = new GUI();
+					ChatGUI window = new ChatGUI();
 					window.frmChat.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -67,7 +67,7 @@ public class GUI {
 	/**
 	 * Create the application.
 	 */
-	public GUI() {
+	public ChatGUI() {
 		frmChat = new JFrame();
 		frmChat.getContentPane().setBackground(Color.BLACK);
 		frmChat.setTitle("ChatClientGUI");
@@ -122,8 +122,8 @@ public class GUI {
 					if (!name.equals("")) {
 						// Profilbild?
 						if (profilbild == -1) {
-							JOptionPane.showMessageDialog(GUI.this.frmChat,
-									"Bitte wählen Sie zuerst ein Profilbild aus.", "Kein Profilbild",
+							JOptionPane.showMessageDialog(ChatGUI.this.frmChat,
+									"Bitte wï¿½hlen Sie zuerst ein Profilbild aus.", "Kein Profilbild",
 									JOptionPane.ERROR_MESSAGE);
 						} else {
 							try {
@@ -135,7 +135,7 @@ public class GUI {
 
 								// Name doppelt?
 								if (client.getInputStream().read() == 1) {
-									JOptionPane.showMessageDialog(GUI.this.frmChat,
+									JOptionPane.showMessageDialog(ChatGUI.this.frmChat,
 											"Der Name ist bereits vorhanden. "
 													+ "\nBitte verwenden Sie einen anderen Namen",
 											"Doppelter Name", JOptionPane.ERROR_MESSAGE);
@@ -184,13 +184,19 @@ public class GUI {
 		btnEnter = new JButton("");
 		btnEnter.setBackground(Color.DARK_GRAY);
 		btnEnter.setIcon(new ImageIcon(
-				GUI.class.getResource("/com/sun/javafx/scene/control/skin/caspian/images/enter-icon.png")));
+				ChatGUI.class.getResource("/com/sun/javafx/scene/control/skin/caspian/images/enter-icon.png")));
 		btnEnter.setBounds(915, 500, 50, 30);
 		btnEnter.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				try {
 				out.println(textField_1.getText());
 				textField_1.setText("");
+				}
+				catch(NullPointerException e1) {
+					JOptionPane.showMessageDialog(ChatGUI.this.frmChat, "Bitte melden Sie sich zuerst an", 
+							"Zuerst anmelden", JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 		});
 		frmChat.getContentPane().add(btnEnter);
